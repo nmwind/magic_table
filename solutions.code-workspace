@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "esp32_controller",
+			"path": "esp32_controller"
+		},
+		{
+			"name": "web_ui",
+			"path": "web_ui"
+		}
+	],
+	"settings": {}
+}
