@@ -2,8 +2,8 @@
 #define _SETTINGS_H
 
 #include <Arduino.h>
-#include <EEPROM.h>
-#include <EEManager.h>
+// #include <EEPROM.h>
+// #include <EEManager.h>
 #include "settings_cfg.h"
 
 #define EEMANAGER_INIT_KEY 50
