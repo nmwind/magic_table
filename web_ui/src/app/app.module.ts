@@ -10,9 +10,11 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
+import { MatButtonModule } from "@angular/material/button";
+import { DefaultComponent } from "./components/default/default.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DefaultComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -23,6 +25,7 @@ import { MatListModule } from "@angular/material/list";
     MatIconModule,
     FormsModule,
     MatListModule,
+    MatButtonModule,
     ReactiveFormsModule,
   ],
   providers: [],

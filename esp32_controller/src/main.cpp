@@ -2,9 +2,9 @@
 #include <FS.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
-// #include <SPIFFS.h>
+#include <SPIFFS.h>
 // #include <ESPmDNS.h>
-#include <LittleFS.h>
+// #include <LittleFS.h>
 #include <SPIFFSEditor.h>
 
 const char *ssid = "Viba.Net";
@@ -72,30 +72,30 @@ void setup()
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  LittleFS.begin(false, "/spiffs");
+  SPIFFS.begin();
 
   // MDNS.addService("http","tcp",80);
 
-  server.addHandler(new SPIFFSEditor(LittleFS, http_username, http_password));
+  server.addHandler(new SPIFFSEditor(SPIFFS, http_username, http_password));
 
   server.on("/heap", HTTP_GET, [](AsyncWebServerRequest *request)
             { request->send(200, "text/plain", String(ESP.getFreeHeap())); });
 
-  // server.serveStatic("/", LittleFS, "/").setDefaultFile("index.html");
+  server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
 
   server.on("/dirs", HTTP_GET, [](AsyncWebServerRequest *request)
             { 
-              listDir(LittleFS, "/", 1);
+              listDir(SPIFFS, "/", 1);
               request->send(200, "text/plain", String(ESP.getFreeHeap())); });
 
+  //server.onFileUpload(ArUploadHandlerFunction fn);
   server.begin();
 
-  listDir(LittleFS, "/", 2);
+  listDir(SPIFFS, "/", 2);
 }
 
 void loop()
 {
   // put your main code here, to run repeatedly:
   delay(2000);
-  listDir(LittleFS, "/", 2);
 }
