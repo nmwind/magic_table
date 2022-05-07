@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4222",
     "build": "ng build",
-    "buildUI": "ng build --configuration production --extractLicenses=false --output-path ..\\esp32_controller\\data\\",
+    "buildUI": "ng build --configuration production --output-hashing none --extractLicenses=false --output-path ..\\esp32_controller\\data\\",
     "watch": "ng build --watch --configuration development",
     "devStart": "ng serve --host 0.0.0.0 --port 4222 --watch --configuration development",
     "lint": "ng lint"
