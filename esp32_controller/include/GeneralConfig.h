@@ -6,6 +6,7 @@
 #define ESP32_CONTROLLER_INCLUDE_GENERALCONFIG_H_
 
 #include <ArduinoJson.hpp>
+#include "definitions.h"
 #include "ConfigBase.h"
 
 using ARDUINOJSON_NAMESPACE::JsonDocument;
@@ -14,25 +15,26 @@ struct WiFiParams
 {
 	char SSID[32];
 	char Password[64];
-} WiFiParamsDefault = { "Viba.Net", "c-GZVVl9tSYTqK$ggiuPibY3bsz!u1wtUeWXeLm!L8LtslYVgJs5XKWM8Ezl" };
+} WiFiParamsDefault = { DEFAULT_WIFI_PARAMS_SSID, DEFAULT_WIFI_PARAMS_PASSWORD };
 
 struct AdminParams
 {
 	char UserName[16];
 	char Password[16];
-} AdminParamsDefault = { "admin", "admin" };
+} AdminParamsDefault = { DEFAULT_ADMIN_PARAMS_USERNAME, DEFAULT_ADMIN_PARAMS_PASSWORD };
 
 struct PowerParams
 {
 	uint8_t Volts;
 	uint16_t MilliAmps;
 	uint32_t MilliWatts;
-} PowerParamsDefault = { 5, 10000, 5 * 10000 };
+} PowerParamsDefault =
+	{ DEFAULT_POWER_PARAMS_VOLTS, DEFAULT_POWER_PARAMS_MILLI_AMPS, DEFAULT_POWER_PARAMS_MILLI_WATTS };
 
 struct LedsParams
 {
 	uint32_t Count;
-} LedsParamsDefault = { 300 };
+} LedsParamsDefault = { DEFAULT_LEDS_PARAMS_COUNT };
 
 class GeneralConfig : public ConfigBase<256>
 {

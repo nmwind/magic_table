@@ -19,9 +19,10 @@ using ARDUINOJSON_NAMESPACE::DeserializationError;
 template<size_t jsonBufferSize>
 class ConfigBase
 {
+ private:
+	const String FileName;
  protected:
-	const String fileName;
-	explicit ConfigBase(const String& name) : fileName('/' + name)
+	explicit ConfigBase(const String& name) : FileName('/' + name)
 	{
 	}
 
@@ -35,7 +36,7 @@ class ConfigBase
  public:
 	bool Load()
 	{
-		File file = SPIFFS.open(fileName, FILE_READ);
+		File file = SPIFFS.open(FileName, FILE_READ);
 		StaticJsonDocument<jsonBufferSize> jDoc;
 		auto error = deserializeJson(jDoc, file);
 
@@ -53,8 +54,8 @@ class ConfigBase
 
 	bool Save()
 	{
-		SPIFFS.remove(fileName);
-		File file = SPIFFS.open(fileName, FILE_WRITE);
+		SPIFFS.remove(FileName);
+		File file = SPIFFS.open(FileName, FILE_WRITE);
 		if (!file)
 		{
 			Serial.println(F("Failed to create file"));
