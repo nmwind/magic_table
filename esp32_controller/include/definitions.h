@@ -9,6 +9,7 @@
 #define BOARD_WIFI_HOSTNAME					"magic_table"
 #define BOARD_UI_HTTP_PORT					80
 #define BOARD_UI_DEFAULT_FILENAME			"index.html"
+#define BOARD_UI_WEB_SOCKET_URI				"/ws"
 
 #define DEFAULT_WIFI_PARAMS_SSID 			"Viba.Net"
 #define DEFAULT_WIFI_PARAMS_PASSWORD 		"c-GZVVl9tSYTqK$ggiuPibY3bsz!u1wtUeWXeLm!L8LtslYVgJs5XKWM8Ezl"

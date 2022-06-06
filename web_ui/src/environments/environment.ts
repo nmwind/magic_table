@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  espUrl: "http://192.168.50.50/",
+  espWsUrl: "ws://192.168.50.50/ws",
 };
 
 /*

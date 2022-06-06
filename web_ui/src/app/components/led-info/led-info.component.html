@@ -1,0 +1,17 @@
+<div class="grid-container" *ngIf="Info | async as i">
+    <span></span>
+    <span>Num</span>
+    <span>Bright</span>
+    <span>PowerMax</span>
+    <span>MaxBright</span>
+    <span>Fps</span>
+    <span></span>
+
+    <span></span>
+    <span>{{i.NumberLeds}}</span>
+    <span>{{i.CurrentMaxBrightness}}</span>
+    <span>{{i.CurrentPowerAtMaxBrightness}}</span>
+    <span>{{i.CurrentBrightness}}</span>
+    <span>{{i.Fps}}</span>
+    <span></span> 
+</div>

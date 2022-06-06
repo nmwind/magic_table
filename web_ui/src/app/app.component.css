@@ -48,6 +48,7 @@ h1.example-app-name {
 }
 
 .toolbarRowInfo {
+  position: relative;
 }
 
 .material-icons.color_blue:hover {
@@ -56,4 +57,8 @@ h1.example-app-name {
 
 .toolbar-spacer {
   flex: 1 1 auto;
+}
+
+.selectedEffect {
+  color: brown;
 }

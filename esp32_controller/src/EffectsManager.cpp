@@ -13,24 +13,28 @@ EffectsManager::EffectsManager(uint16_t ledsCount) noexcept
 	FastLED.setMaxPowerInVoltsAndMilliamps(DEFAULT_POWER_PARAMS_VOLTS, DEFAULT_POWER_PARAMS_MILLI_AMPS);
 }
 
-void EffectsManager::Start(uint index)
+void EffectsManager::Start(const String& name)
 {
-	if (index >= sizeof(make_effects_array) / sizeof(make_effects_array[0]) || index < 0)
-	{
-		return;
-	}
-
+//	if (index >= sizeof(make_effects_array) / sizeof(make_effects_array[0]) || index < 0)
+//	{
+//		return;
+//	}
 	_isTicking = false;
 
-	if (_effectIndex != index)
+	if (_descriptor == nullptr || _descriptor->Name != name)
 	{
 		if (_effect)
 		{
 			_effect.reset(nullptr);
 		}
 
-		_effectIndex = index;
-		_effect = make_effects_array[index]();
+		_descriptor = GetEffectDescriptor(name.c_str());
+		if (_descriptor == nullptr)
+		{
+			Serial.printf("[EffectsManager::Start][%s]: effect not found\n", name.c_str());
+			return;
+		}
+		_effect = _descriptor->creator();
 		_effect->setLeds(_leds, LedsCount);
 		_effect->begin();
 	}
@@ -40,9 +44,9 @@ void EffectsManager::Start(uint index)
 
 void EffectsManager::Stop()
 {
-	_isTicking = false;
 	FastLED.clear(true);
 	FastLED.show();
+	_isTicking = false;
 }
 
 void EffectsManager::Tick()
@@ -60,7 +64,9 @@ void EffectsManager::Next()
 {
 	if (_isTicking)
 	{
-		Start(_effectIndex + 1);
+		const auto effect = GetEffectDescriptor(_descriptor->Order + 1);
+		if (effect)
+			Start(effect->Name);
 	}
 }
 
@@ -68,19 +74,51 @@ void EffectsManager::Previous()
 {
 	if (_isTicking)
 	{
-		Start(_effectIndex - 1);
+		const auto effect = GetEffectDescriptor(_descriptor->Order - 1);
+		if (effect)
+			Start(effect->Name);
 	}
 }
 
-uint EffectsManager::GetEffectIndex() const
+EffectsManagerInfo EffectsManager::GetInfo() const
 {
-	return _effectIndex;
+	EffectsManagerInfo info{
+		FastLED.size(),
+		calculate_max_brightness_for_power_vmA(_leds,
+			LedsCount,
+			255,
+			DEFAULT_POWER_PARAMS_VOLTS,
+			DEFAULT_POWER_PARAMS_MILLI_AMPS),
+		calculate_unscaled_power_mW(_leds, LedsCount),
+		FastLED.getBrightness(),
+		FastLED.getFPS()
+	};
+
+	return info;
+}
+
+int EffectsManager::Index() const
+{
+	return _descriptor != nullptr ? _descriptor->Order : -1;
+}
+
+bool EffectsManager::IsRun() const
+{
+	return _isTicking;
 }
 
 void EffectsManager::Reset()
 {
 
 }
+void EffectsManager::GetEffectsInfo(EffectInfo* array)
+{
+	for (int i = 0; i < EFFECTS_COUNT; ++i)
+	{
+		array[i] = { EffectsDescriptorsArray[i].Name, EffectsDescriptorsArray[i].Order };
+	}
+}
+
 
 
 

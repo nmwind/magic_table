@@ -7,7 +7,7 @@
     "build": "ng build",
     "buildUI": "ng build --configuration production --output-hashing none --extractLicenses=false --output-path ..\\esp32_controller\\data\\",
     "watch": "ng build --watch --configuration development",
-    "devStart": "ng serve --host 0.0.0.0 --port 4222 --watch --configuration development",
+    "devStart": "ng serve --host 192.168.50.10 --port 4222 --watch --configuration development",
     "lint": "ng lint"
   },
   "private": true,
@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~13.3.6",
     "@angular/platform-browser-dynamic": "~13.3.6",
     "@angular/router": "~13.3.6",
+    "ngx-socket-io": "^4.2.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
